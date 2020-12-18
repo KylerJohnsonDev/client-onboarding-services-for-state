@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "book-inventory-ui-services-for-state": {
+    "client-onboarding-ui-services-for-state": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/book-inventory-ui-services-for-state",
+            "outputPath": "dist/client-onboarding-ui-services-for-state",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "book-inventory-ui-services-for-state:build"
+            "browserTarget": "client-onboarding-ui-services-for-state:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "book-inventory-ui-services-for-state:build:production"
+              "browserTarget": "client-onboarding-ui-services-for-state:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "book-inventory-ui-services-for-state:build"
+            "browserTarget": "client-onboarding-ui-services-for-state:build"
           }
         },
         "test": {
@@ -116,16 +116,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "book-inventory-ui-services-for-state:serve"
+            "devServerTarget": "client-onboarding-ui-services-for-state:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "book-inventory-ui-services-for-state:serve:production"
+              "devServerTarget": "client-onboarding-ui-services-for-state:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "book-inventory-ui-services-for-state"
+  "defaultProject": "client-onboarding-ui-services-for-state"
 }

@@ -1,39 +1,35 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Client } from './client';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { ClientStateService } from 'src/app/state/clients/client-state.service';
+import { Client } from '../../state/clients/client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientsService {
 
-  private clientsSubject$ = new BehaviorSubject<Client[]>([]);
-  readonly clients$: Observable<Client[]> = this.clientsSubject$.asObservable();
-
-  stateEvent = new EventEmitter<StateEvent<Client>();
-
+  private url: string = '/clients';
 
   constructor(
+    private fromClientState: ClientStateService,
     private http: HttpClient
   ) { }
 
-
-}
-
-
-
-export abstract class StateEvent<T> {
-  action: string = '';
-  payload?: T | Partial<T> | T[];
-
-  constructor(action: string, payload?: T) {
-    this.action = action;
-    this.payload = payload;
+  getClients(): Observable<Client[]>{
+    return this.fromClientState.clients$.pipe(
+      filter(clients => clients?.length === 0),
+      switchMap(() => {
+        this.fromClientState.s
+        return this.http.get<Client[]>(this.url)
+      })
+    )
   }
+
+
+
 }
 
-export class ClientStateEvent extends StateEvent<Client> {
-  super() {}
-}
+
 

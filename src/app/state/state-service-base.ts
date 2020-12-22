@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from "rxjs";
-import { pluck } from 'rxjs/operators';
+import { ClientState } from "./clients/client-state";
 
 export abstract class StateServiceBase<T> {
   private _stateSubject$: BehaviorSubject<T>;
@@ -10,25 +10,27 @@ export abstract class StateServiceBase<T> {
     this._state$ = this._stateSubject$.asObservable();
   }
 
-  setState(entity: T): void {
-    const clone = this.deepClone(entity);
-    this._stateSubject$.next(clone);
+  protected setState(entity: T): void {
+    this._stateSubject$.next(entity);
   }
 
-  readState(): Observable<T> {
+  protected selectState(): Observable<T> {
     return this._state$;
   }
 
-  pluckProperty<K extends keyof T>(key: K): Observable<Partial<T>> {
-    return this._state$.pipe(
-      pluck(key)
-    );
+  protected selectStateSnapshot(): T {
+    return this._stateSubject$.value;
   }
 
-  setProperty<K extends keyof T>(key: K, payload: any): void {
-    const stateClone = this.deepClone(this._stateSubject$.value);
-    stateClone[key] = payload;
-    this.setState(stateClone);
+  protected updateStateByProperty<K extends keyof T>(prop: K, payload: any): void {
+    const stateCopy = this.deepClone(this._stateSubject$.value);
+    stateCopy[prop] = payload;
+    this.setState(stateCopy);
+  }
+
+  protected pluckStateProperty<K extends keyof T>(prop: K): T[K] {
+    const state = this.selectStateSnapshot();
+    return state[prop];
   }
 
   private deepClone(entity: T) {

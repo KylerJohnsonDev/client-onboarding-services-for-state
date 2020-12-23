@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
@@ -70,7 +71,14 @@ export class ClientStateService extends StateServiceBase<ClientState> {
     this.setState(stateClone);
   }
 
-
+  deleteClientById(id: string): void {
+    const stateClone = this.selectStateSnapshot();
+    const newClientsState = stateClone.clients.filter(client => client.id !== id);
+    this.setState({
+      isLoading: false,
+      clients: newClientsState
+    });
+  }
 
 
 }
